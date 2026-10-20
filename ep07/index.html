@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shanghai Diaries EP.07</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Lobster+Two:ital,wght@1,700&display=swap">
+<style>
+/* Layout: production sheet. Header, then storyboard rows (9:16 frame mock + script), then supporting kits. */
+:root{
+  --bg:#F2F6F5; --surface:#FFFFFF; --ink:#15302E; --muted:#58706C; --line:#D5E0DD;
+  --teal:#1B8F87; --teal-soft:#DDF1EE; --butter:#F2D65C; --butter-ink:#3A3000;
+  /* scene colours inside frame mocks: fixed, they depict footage, not UI */
+  --ov-teal:#5FE0D3; --ov-butter:#FBE57A; --ov-white:#FFFFFF; --ov-shadow:rgba(0,0,0,.55);
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --f-script:"Lobster Two", "Brush Script MT", cursive;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1716; --surface:#152220; --ink:#E4EFED; --muted:#93AAA6; --line:#25403C;
+  --teal:#56CBC0; --teal-soft:#183A36; --butter:#F2D65C; --butter-ink:#2A2300; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1716; --surface:#152220; --ink:#E4EFED; --muted:#93AAA6; --line:#25403C;
+  --teal:#56CBC0; --teal-soft:#183A36; --butter:#F2D65C; --butter-ink:#2A2300; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:32px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:48px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(30px,5vw,48px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:24px;font-weight:700}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.muted{color:var(--muted)}
+section{display:grid;gap:18px}
+.sec-head{display:grid;gap:6px;max-width:68ch}
+
+/* header */
+header{display:grid;gap:16px}
+.script-title{font-family:var(--f-script);font-style:italic;color:var(--teal);font-size:clamp(26px,4vw,36px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px}
+.chip b{font-weight:600}
+.note{background:var(--teal-soft);border-radius:12px;padding:14px 16px;max-width:76ch}
+
+/* hooks */
+.hooks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.hook{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start}
+.hook.pick{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+.tag{justify-self:start;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--butter);color:var(--butter-ink);border-radius:4px;padding:2px 6px}
+
+/* storyboard */
+.board{display:grid;gap:14px}
+.frame{display:grid;grid-template-columns:148px minmax(0,1fr);gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.shot{position:relative;aspect-ratio:9/16;max-width:100%;border-radius:10px;overflow:hidden;color:var(--ov-white);font-family:var(--f-body)}
+.shot .ov{position:absolute;left:8px;right:8px;text-align:center;text-shadow:0 1px 3px var(--ov-shadow)}
+.ov.title{top:22%;font-family:var(--f-script);font-style:italic;color:var(--ov-teal);font-size:19px;line-height:1.05}
+.ov.title small{display:block;font-size:11px;color:var(--ov-white);font-family:var(--f-body);font-style:normal;margin-top:2px}
+.ov.ep{top:8px;font-size:9px;letter-spacing:.06em}
+.ov.pill{top:14%;left:50%;right:auto;transform:translateX(-50%);white-space:nowrap;background:var(--ov-butter);color:#2A2300;text-shadow:none;font-weight:700;font-size:9px;border-radius:999px;padding:3px 8px}
+.ov.sub{bottom:16%;font-size:9.5px;line-height:1.3}
+.ov.cta{bottom:30%;font-weight:700;font-size:11px}
+.frame-body{display:grid;gap:10px;align-content:start;min-width:0}
+.frame-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.tc{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rows{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 14px;font-size:14px}
+.rows dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.rows dd{margin:0}
+.vo{font-weight:500}
+
+/* scene backgrounds */
+.s-night{background:
+  radial-gradient(circle at 22% 62%, #FFD36B 0 1.5px, transparent 2px),
+  radial-gradient(circle at 38% 55%, #FFD36B 0 1.5px, transparent 2px),
+  radial-gradient(circle at 61% 48%, #9EE7FF 0 1.5px, transparent 2px),
+  radial-gradient(circle at 74% 58%, #FFD36B 0 1.5px, transparent 2px),
+  linear-gradient(180deg,#0A1636 0%,#1F2C5C 55%,#3B2B4C 70%,#10131C 71%,#1A2236 100%)}
+.s-brick{background:linear-gradient(180deg,#C9D5DA 0 30%,#A8705A 30% 100%)}
+.s-alley{background:linear-gradient(90deg,#6C5A48 0 18%,#D8C6A5 18% 82%,#6C5A48 82%),#D8C6A5}
+.s-map{background:#E6EEE8}
+.s-roof{background:linear-gradient(180deg,#B7D3DF 0 34%,#2E2B2A 34% 40%,#B8463A 40% 72%,#3A302C 72%)}
+.s-tip{background:linear-gradient(160deg,#8A6C5A,#3E3A44)}
+.s-gold{background:linear-gradient(180deg,#F4B266 0%,#E58E6B 40%,#5A6894 72%,#1E2433 73%,#2A3044 100%)}
+.s-recap{background:linear-gradient(180deg,#141D3E,#2B2244)}
+.shot svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* lists / kits */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:6px}
+.check{display:grid;gap:8px}
+.check label{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:start;cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--teal)}
+.check .fb{display:block;font-size:13px;color:var(--muted)}
+.check input:checked + span{text-decoration:line-through;color:var(--muted)}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.sw{display:flex;align-items:center;gap:8px;font-size:13px}
+.sw i{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);display:inline-block}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.tbl{overflow-x:auto}
+
+/* copy blocks */
+.copy-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+pre.copytext{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--f-body);font-size:14px;line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;max-height:520px;overflow:auto}
+button.copy{font:600 13px var(--f-body);background:var(--teal);color:var(--surface);border:0;border-radius:999px;padding:7px 14px;cursor:pointer}
+button.copy:focus-visible,.check input:focus-visible{outline:2px solid var(--butter);outline-offset:2px}
+.fill{background:var(--butter);color:var(--butter-ink);border-radius:3px;padding:0 3px}
+
+@media (max-width:560px){
+  .frame{grid-template-columns:104px minmax(0,1fr);gap:14px;padding:12px}
+  .rows{grid-template-columns:minmax(0,1fr);gap:2px}
+  .rows dd{margin-bottom:8px}
+  .ov.title{font-size:14px}
+}
+/* animatic */
+.animatic{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:28px;align-items:start}
+.animatic video{width:100%;max-width:100%;aspect-ratio:9/16;border-radius:16px;background:var(--ink);display:block}
+.animatic .card{align-self:stretch}
+a.dl{justify-self:start;font:600 14px var(--f-body);background:var(--teal);color:var(--surface);text-decoration:none;border-radius:999px;padding:9px 18px}
+a.dl:focus-visible{outline:2px solid var(--butter);outline-offset:2px}
+@media (max-width:640px){.animatic{grid-template-columns:minmax(0,1fr)}.animatic video{max-width:340px;margin:0 auto}}
+/* episode nav */
+.epnav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px}
+.epnav a{color:var(--teal);text-decoration:none;font-weight:600}
+.epnav a:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<nav class="epnav" aria-label="Episodes"><a href="../">← All episodes</a><a href="../ep08/">EP.08 · Nanjing Road →</a></nav>
+
+<header>
+  <span class="eyebrow">Production pack · @madelmw · Reel 9:16</span>
+  <h1>MADDY'S SHANGHAI DIARIES EP.07</h1>
+  <p class="script-title">Shanghai Citywalk Guide (part II)</p>
+  <div class="chips">
+    <span class="chip"><b>Length</b> 50–55 s</span>
+    <span class="chip"><b>Route</b> Xintiandi → Tianzifang → Yu Garden → The Bund</span>
+    <span class="chip"><b>Voice</b> Indo-English VO + subtitles</span>
+    <span class="chip"><b>Post</b> Wed 21 Oct, 19:00–20:00 WIB</span>
+    <span class="chip"><b>CTA keyword</b> WALK</span>
+  </div>
+  <p class="note"><b>Built from trip footage.</b> Maddy is back in Jakarta (the 13 Oct gallery post and 16 Oct shampoo post), so everything here is cut from the camera roll. Each frame lists the clip to look for, and the footage checklist gives a fallback when a clip doesn't exist. Bracketed <span class="fill">[slots]</span> are spots she actually visited and only she knows.</p>
+</header>
+
+<section id="animatic">
+  <div class="sec-head">
+    <span class="eyebrow">Animatic</span>
+    <h2>The whole reel, timed</h2>
+    <p class="muted">A 55-second illustrated run-through of the storyboard below: every title, stop label and subtitle in its place and at its time, over an original music bed.</p>
+  </div>
+  <div class="animatic">
+    <video src="animatic.mp4" controls playsinline preload="metadata">
+      <a href="animatic.mp4">Download the animatic (MP4)</a>
+    </video>
+    <div class="card">
+      <h3>How to use it</h3>
+      <ul class="clean">
+        <li>Drop it on the bottom track in CapCut and lay her real clips over it, scene by scene. Cuts and text timings line up with frames F1–F9.</li>
+        <li>The drawings stand in for footage. Nothing in it is meant to be posted as-is.</li>
+        <li>No voiceover: record the VO lines from the script and set them against the subtitles.</li>
+        <li>The music is a temp bed. Swap in a trending audio when posting.</li>
+      </ul>
+      <a class="dl" href="animatic.mp4" download>Download MP4</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Concept</span>
+    <h2>Afternoon to night, ending on the Bund lights</h2>
+    <p class="muted">Part I covered the daytime café and shopping strip (Wukang Rd → Anfu → Huaihai → Xintiandi). Part II picks up at Xintiandi and walks east into the evening, so the reel has a built-in payoff: the Bund skyline switching on. Open on that payoff, rewind, then earn it.</p>
+  </div>
+  <div class="hooks">
+    <div class="hook pick"><span class="tag">Use this</span><h3>Cold-open the ending</h3><p>Bund skyline at night for 2 s, VO: <i>"Part 2 kita tutup di sini… tapi start-nya dari mana?"</i> then a rewind effect to daytime. Shows the payoff before anyone can scroll away.</p></div>
+    <div class="hook"><span class="tag">Alt A</span><h3>Callback to Part I</h3><p>Open on the last frame of EP.06, text: <i>"Part 1 cuma pemanasan 😮‍💨"</i>. Rewards returning viewers, weaker for new ones.</p></div>
+    <div class="hook"><span class="tag">Alt B</span><h3>First-timer promise</h3><p>Talking head: <i>"First time ke Shanghai? Ini rute sore sampai malam yang wajib banget."</i> Matches her beauty-reel format, slower start.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Storyboard + script</span>
+    <h2>9 frames, 55 seconds</h2>
+    <p class="muted">Frame mocks show text placement and style only. VO is spoken; subtitles repeat it in short lowercase lines, the way her EP.05 subtitles do.</p>
+  </div>
+  <div class="board" id="board"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Before editing</span>
+    <h2>Footage checklist</h2>
+    <p class="muted">Tick what's in the camera roll. Your ticks are saved in this browser only.</p>
+  </div>
+  <div class="grid2">
+    <div class="card check" id="checklist"></div>
+    <div class="card">
+      <h3>Pull from existing posts</h3>
+      <ul class="clean">
+        <li>The group crossing shot from the EP.06 cover. Reuse a second of it in F2 so the two parts visibly connect.</li>
+        <li>Any leftover EP.04 Nanjing East Rd clips. That street leads to the Bund, so they work as B-roll in F8.</li>
+        <li>Story highlight "Shanghai": check it for vertical Bund clips that never made a reel.</li>
+      </ul>
+      <h3>Record in Jakarta (5 min)</h3>
+      <ul class="clean">
+        <li>VO in a quiet room, phone 15 cm away. Record each frame's line 2–3 times.</li>
+        <li>Optional: 3 s talking-head intro in the same warm room as the beauty reels, if using Alt B.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Edit spec</span>
+    <h2>Match the series look</h2>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Text styles (CapCut)</h3>
+      <div class="tbl"><table>
+        <tr><th>Element</th><th>Style</th></tr>
+        <tr><td>Title</td><td>Teal script, same preset as the EP.06 "Shanghai Citywalk Guide" title, "(part II)" small underneath</td></tr>
+        <tr><td>Stop label</td><td>Butter-yellow pill, dark text, "STOP 2 · Tianzifang 田子坊"</td></tr>
+        <tr><td>Subtitles</td><td>White, lowercase, light shadow, lower third. Max 2 lines</td></tr>
+        <tr><td>Chinese names</td><td>Add the characters next to each stop, like the big 上海 on her food covers</td></tr>
+      </table></div>
+      <div class="swatches">
+        <span class="sw"><i style="background:#5FE0D3"></i>Title teal</span>
+        <span class="sw"><i style="background:#FBE57A"></i>Pill yellow</span>
+        <span class="sw"><i style="background:#FFFFFF"></i>Subtitle white</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Pace, sound, grade</h3>
+      <ul class="clean">
+        <li><b>Cuts:</b> 1–2 s per clip, cut on footsteps. Whip-pan between stops.</li>
+        <li><b>Rewind:</b> CapCut "Rewind" or "VHS rewind" effect for F1 → F2, under 0.5 s.</li>
+        <li><b>Speed ramp:</b> slow-mo into the xiaolongbao bite and the moment the Bund lights come on.</li>
+        <li><b>Music:</b> pick a trending city-walk audio in the IG audio tab when posting. Keep it about 15 dB under the VO and bring it up to full on F8.</li>
+        <li><b>Grade:</b> warm daytime, slightly cooler night. Keep skin tones natural. No heavy filter, her feed doesn't use one.</li>
+        <li><b>Export:</b> 1080×1920, 30 fps. Keep text inside the middle 1080×1350 so the profile grid crop doesn't cut it.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Cover</span>
+    <h2>Thumbnail</h2>
+  </div>
+  <div class="card">
+    <p>Use the F8 frame: friends at the Bund railing, skyline lit behind. Teal script "Shanghai Citywalk Guide", "(part II)" underneath, set in the same spot as the EP.06 cover so the two sit side by side as a pair in the grid. No extra text. Check the crop in the grid preview before posting.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Copy</span>
+    <h2>Caption, pinned comment, DM reply</h2>
+    <p class="muted">Same skeleton as EP.06. Replace the yellow-marked slots before posting.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="copy-head"><h3>Caption</h3><button class="copy" data-target="cap" type="button">Copy</button></div>
+<pre class="copytext" id="cap">MADDY'S SHANGHAI DIARIES EP.07: Shanghai Citywalk Guide (Part II) 🌃✨
+
+Lanjutan dari part 1! Kali ini rute sore sampai malam, dan end-nya di The Bund pas lampunya nyala 🤍
+
+Jalur recommended: Xintiandi - Tianzifang - Yu Garden - The Bund 🚶‍♀️🚶‍♀️🚶‍♀️
+
+Places mentioned ✨:
+
+Landmarks:
+- Xintiandi
+- Tianzifang
+- Yu Garden (Yuyuan)
+- The Bund
+
+Coffee &amp; snacks:
+- [cafe di Xintiandi]
+- [jajanan di Tianzifang]
+- [tempat xiaolongbao di Yu Garden]
+
+Shopping:
+- [toko di Tianzifang]
+
+Pro tip: ke Yu Garden pagi atau weekday biar gak terlalu rame! Sampai di The Bund sebelum jam 9 malam, karena lampunya biasanya udah dimatiin sekitar jam 10 👀
+
+Comment "WALK" and I'll send you the full list + lokasinya through DMs! 👇🏻
+
+Missed part 1? Cek EP.06 di profile aku yaa 🤍
+
+#shanghai #shanghaifood #shanghaitravel #thebund #citywalk</pre>
+    </div>
+    <div class="card">
+      <div class="copy-head"><h3>Pinned comment</h3><button class="copy" data-target="pin" type="button">Copy</button></div>
+<pre class="copytext" id="pin">Rute lengkap part 1 + part 2 = 1 hari full jalan kaki 🥹 Kalian tim pagi atau tim malam? 🌞🌃</pre>
+      <div class="copy-head"><h3>DM reply for "WALK"</h3><button class="copy" data-target="dm" type="button">Copy</button></div>
+<pre class="copytext" id="dm">Hiii makasih udah nonton EP.07! 🤍 Ini list Citywalk Part II aku:
+
+1. Xintiandi 新天地 – [cafe]
+2. Tianzifang 田子坊 – [jajanan / toko]
+3. Yu Garden 豫园 – [tempat xiaolongbao]
+4. The Bund 外滩 – dateng sebelum jam 9 malam ✨
+
+Tips: Google Maps kurang akurat di China, pakai Apple Maps atau Amap ya!
+
+Part 1 (Wukang - Anfu - Huaihai) ada di EP.06 👁️👁️</pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Rollout</span>
+    <h2>Posting plan</h2>
+  </div>
+  <div class="card tbl"><table>
+    <tr><th>When</th><th>Where</th><th>What</th></tr>
+    <tr><td>Tue 20 Oct, evening</td><td>Story</td><td>2 s Bund night clip + "EP.07 besok! 🌃" + countdown sticker</td></tr>
+    <tr><td>Wed 21 Oct, 19:00–20:00 WIB</td><td>Reel</td><td>Post with the Shanghai location tag. Add the pinned comment right away</td></tr>
+    <tr><td>Wed 21 Oct, +1 h</td><td>Story</td><td>Share the reel, with a sticker: "comment WALK buat list-nya 👇🏻"</td></tr>
+    <tr><td>Wed–Thu</td><td>DMs</td><td>Reply to every "WALK" with the DM text. Answer the first 30 min of comments quickly, that's when reach is decided</td></tr>
+    <tr><td>Fri 23 Oct</td><td>Reel</td><td>EP.08 (Nanjing Road) keeps the every-2-days cadence going</td></tr>
+  </table></div>
+  <p class="muted">The 19:00 slot is a default for an Indonesian audience. If her Insights show a different peak hour, use that instead.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Before publishing</span>
+    <h2>Verify</h2>
+  </div>
+  <div class="card">
+    <ul class="clean">
+      <li>Bund light-off time. Commonly about 22:00, but it changes by season and on holidays. Adjust the pro tip if her own footage says otherwise.</li>
+      <li>How they actually got from Tianzifang to Yu Garden (metro, taxi or walking). Fix the F5 route card to match.</li>
+      <li>Every bracketed slot in the caption and DM is filled with a real place she went.</li>
+      <li>Only tag a brand (for example @chinago.id) if they were part of this day.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<script>
+const frames = [
+  {id:"F1", tc:"0:00–0:03", name:"Hook: the ending first", scene:"s-night",
+   ov:[["ep","EP.07"],["title","Shanghai Citywalk Guide<small>(part II)</small>"],["sub","part 2 kita tutup di sini…"]],
+   shot:"The Bund at night, Lujiazui skyline lit. Handheld, slow push toward the river.",
+   vo:"\"Part 2 kita tutup di sini… tapi start-nya dari mana?\"",
+   edit:"Title pops on beat 1. Rewind effect on the last 0.4 s."},
+  {id:"F2", tc:"0:03–0:06", name:"Rewind to daytime", scene:"s-brick",
+   ov:[["pill","lanjut dari part 1 👁️👁️"],["sub","hi i'm madeleine and this is episode seven"]],
+   shot:"Rewind lands on daytime Xintiandi. 1 s of the EP.06 crossing shot, then the group walking into the stone lanes.",
+   vo:"\"Hi, I'm Madeleine and this is episode seven of my Shanghai diaries!\"",
+   edit:"Same intro line as EP.05 for series consistency."},
+  {id:"F3", tc:"0:06–0:13", name:"STOP 1 · Xintiandi 新天地", scene:"s-brick",
+   ov:[["pill","STOP 1 · Xintiandi 新天地"],["sub","ngopi dulu sebelum jalan jauh ☕"]],
+   shot:"Wide of the brick shikumen lanes. POV walking. Coffee cups clinking at [cafe].",
+   vo:"\"Kita lanjut dari Xintiandi! Gang-gang batu bata khas Shanghai, cocok banget buat ngopi dulu sebelum jalan jauh.\"",
+   edit:"3–4 clips, 1.5 s each."},
+  {id:"F4", tc:"0:13–0:22", name:"STOP 2 · Tianzifang 田子坊", scene:"s-alley",
+   ov:[["pill","STOP 2 · Tianzifang 田子坊"],["sub","nyasar di sini is part of the fun 🤭"]],
+   shot:"Tilt up the narrow alley with hanging signs. Hands browsing [toko]. Close-up of [jajanan] in hand, first bite.",
+   vo:"\"Terus jalan ke Tianzifang! Gangnya kecil-kecil tapi isinya banyak banget, dari cafe, toko lucu, sampai jajanan.\"",
+   edit:"Fastest section: cut on footsteps."},
+  {id:"F5", tc:"0:22–0:25", name:"Route card", scene:"s-map", map:true,
+   ov:[["sub","next stop: yu garden 🚇"]],
+   shot:"Graphic: dotted line drawing from Tianzifang to Yu Garden over a soft map, metro or taxi icon.",
+   vo:"No VO. Music swell.",
+   edit:"Label the leg with how they really got there (see Verify)."},
+  {id:"F6", tc:"0:25–0:35", name:"STOP 3 · Yu Garden 豫园", scene:"s-roof",
+   ov:[["pill","STOP 3 · Yu Garden 豫园"],["sub","hati-hati panas!! 🥟"]],
+   shot:"Tilt up the curved rooftops. Crowd wide. Xiaolongbao close-up: lift, bite, soup. Friend reaction.",
+   vo:"\"Next, Yu Garden! Atap-atapnya cantik banget, dan wajib jajan xiaolongbao di sekitar sini. Soup-nya juicy, hati-hati panas!\"",
+   edit:"Slow-mo speed ramp on the bite. Reaction shot in real time."},
+  {id:"F7", tc:"0:35–0:39", name:"Pro tip", scene:"s-tip",
+   ov:[["pill","PRO TIP 💡"],["sub","dateng pagi / weekday biar gak rame!"]],
+   shot:"Crowded bazaar B-roll, slightly blurred behind the tip.",
+   vo:"\"Pro tip: dateng pagi atau weekday, karena sore, apalagi weekend, rame banget!\"",
+   edit:"Matches the \"Pro tip\" line in every EP caption."},
+  {id:"F8", tc:"0:39–0:49", name:"STOP 4 · The Bund 外滩", scene:"s-gold",
+   ov:[["pill","STOP 4 · The Bund 外滩"],["sub","worth the wait ✨"]],
+   shot:"Walk out to the riverfront at golden hour. Day-to-night cut on the same skyline. Friends' photo moment at the railing. Slow skyline pan.",
+   vo:"\"And finally… The Bund! Tunggu sampai lampunya nyala, view-nya worth it banget. Lampunya biasanya dimatiin sekitar jam 10 malam ya, jadi jangan telat!\"",
+   edit:"Music up to full. Speed ramp on lights-on. This frame is the cover."},
+  {id:"F9", tc:"0:49–0:55", name:"Recap + CTA", scene:"s-recap",
+   ov:[["title","Xintiandi · Tianzifang<br>Yu Garden · The Bund"],["cta","comment \"WALK\" 👇🏻"],["sub","see you di EP.08 👁️👁️"]],
+   shot:"Blurred Bund background with the four stops listed in order.",
+   vo:"\"Comment WALK, nanti aku kirimin full list sama lokasinya lewat DM! See you di episode 8!\"",
+   edit:"Hold 2 s on the CTA so it can be read."}
+];
+const mapSvg = '<svg viewBox="0 0 90 160" aria-hidden="true"><path d="M10 40 H80 M10 80 H80 M10 120 H80 M30 0 V160 M60 0 V160" stroke="#C9D8CF" stroke-width="3" fill="none"/><path d="M22 118 C30 90, 52 92, 62 52" stroke="#1B8F87" stroke-width="3" stroke-dasharray="4 4" fill="none"/><circle cx="22" cy="118" r="5" fill="#FBE57A" stroke="#15302E" stroke-width="1.5"/><circle cx="62" cy="52" r="5" fill="#5FE0D3" stroke="#15302E" stroke-width="1.5"/></svg>';
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const fill = s => esc(s).replace(/\[([^\]]+)\]/g, '<span class="fill">[$1]</span>');
+document.getElementById("board").innerHTML = frames.map(f => `
+  <article class="frame">
+    <div class="shot ${f.scene}" role="img" aria-label="Frame ${f.id} mock">
+      ${f.map ? mapSvg : ""}
+      ${f.ov.map(([k,t]) => `<div class="ov ${k}"${f.map && k==="sub" ? ' style="color:#15302E;text-shadow:none"' : ""}>${t}</div>`).join("")}
+    </div>
+    <div class="frame-body">
+      <div class="frame-top"><span class="tag">${f.id}</span><h3>${esc(f.name)}</h3><span class="tc">${f.tc}</span></div>
+      <dl class="rows">
+        <dt>Shot</dt><dd>${fill(f.shot)}</dd>
+        <dt>VO</dt><dd class="vo">${esc(f.vo)}</dd>
+        <dt>Edit</dt><dd>${esc(f.edit)}</dd>
+      </dl>
+    </div>
+  </article>`).join("");
+
+const items = [
+  ["c1","Bund at night, skyline lit (vertical)","No night clip? Open on the golden-hour Bund clip instead and change the VO to \"…sampai lampunya nyala\"."],
+  ["c2","Bund golden hour → lights on, same angle","Only one of the two? Use a hard cut between any day and night skyline clips."],
+  ["c3","Xintiandi lanes + coffee","No Xintiandi footage? Start at Tianzifang and drop F3. Change the route to 3 stops."],
+  ["c4","Tianzifang alley tilt-up + browsing + snack","Use photos with a slow zoom (Ken Burns) if there's no video."],
+  ["c5","Yu Garden rooftops wide","Story highlight clips at 9:16 work here."],
+  ["c6","Xiaolongbao close-up + bite","No food clip? Show a rooftop clip longer and change the VO to the garden itself."],
+  ["c7","Friends' reaction / photo moment at the Bund","Any candid group clip from that evening."],
+  ["c8","1 s of the EP.06 crossing shot","Re-export from the EP.06 project file."]
+];
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem("ep07-check") || "{}"); } catch (e) {}
+const cl = document.getElementById("checklist");
+cl.innerHTML = "<h3>Clips needed</h3>" + items.map(([id,t,fb]) =>
+  `<label for="${id}"><input type="checkbox" id="${id}" ${saved[id] ? "checked" : ""}><span>${esc(t)}<span class="fb">${esc(fb)}</span></span></label>`).join("");
+cl.addEventListener("change", e => {
+  saved[e.target.id] = e.target.checked;
+  try { localStorage.setItem("ep07-check", JSON.stringify(saved)); } catch (err) {}
+});
+
+document.querySelectorAll("pre.copytext").forEach(p => { p.innerHTML = fill(p.textContent); });
+document.querySelectorAll("button.copy").forEach(b => b.addEventListener("click", () => {
+  const el = document.getElementById(b.dataset.target);
+  const done = () => { b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1500); };
+  const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected, press Cmd/Ctrl+C"; };
+  try { navigator.clipboard.writeText(el.textContent).then(done, select); } catch (e) { select(); }
+}));
+</script>
+</body>
+</html>
